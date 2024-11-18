@@ -11,6 +11,9 @@ export default class Folder extends BaseModel {
   declare name: string
 
   @column()
+  declare slug: string
+
+  @column()
   declare totalWorkTime: number
 
   @hasMany(() => Schedule)
