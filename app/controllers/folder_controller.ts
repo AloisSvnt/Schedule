@@ -13,7 +13,7 @@ export default class FolderController {
   /**
    * Show the form for creating a new record
    */
-  public async create({ inertia }: HttpContext) {
+  async create({ inertia }: HttpContext) {
     return inertia.render('Folders/Create')
   }
 
