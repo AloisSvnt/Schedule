@@ -1,7 +1,15 @@
 import { Link, usePage } from '@inertiajs/react';
 
+import { PageProps as InertiaPageProps } from '@inertiajs/core';
+
+interface PageProps extends InertiaPageProps {
+  folder?: {
+    name: string;
+  };
+}
+
 function Breadcrumbs() {
-  const { props } = usePage();
+  const { props } = usePage<PageProps>();
   const url = window.location.pathname;
   const urlArray = url.split('/').filter((item) => item !== '');
 
