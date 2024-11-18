@@ -1,5 +1,6 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import Folder from '#models/folder' 
+import slugify from '#utils/slugify'
 
 export default class FolderController {
   /**
@@ -21,7 +22,8 @@ export default class FolderController {
    * Handle form submission for the create action
    */
   async store({ request, response, session }: HttpContext) {
-    const folderData = request.only(['name', 'totalWorkTime']) as { name: string, totalWorkTime: number }
+    const folderData = request.only(['name', 'totalWorkTime']) as { name: string, totalWorkTime: number, slug?: string }
+    folderData.slug = slugify(folderData.name)
     await Folder.create(folderData)
     session.flash({ success: 'Folder created successfully' })
     return response.redirect().toRoute('folders.index')
@@ -54,7 +56,8 @@ export default class FolderController {
     if(!folder) {
       return response.status(404).send('Folder not found')
     }
-    const folderData = request.only(['name', 'totalWorkTime']) as { name: string, totalWorkTime: number }
+    const folderData = request.only(['name', 'totalWorkTime']) as { name: string, totalWorkTime: number, slug?: string }
+    folderData.slug = slugify(folderData.name)
     folder.merge(folderData)
     await folder.save()
     session.flash({ success: 'Folder updated successfully' })
