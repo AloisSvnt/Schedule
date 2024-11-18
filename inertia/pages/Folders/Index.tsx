@@ -11,14 +11,14 @@ function Index (props : any)  {
       </div>
       <ul className="max-h-[768px] overflow-scroll">
         {props.folders.map((folder: any) => (
-          <li key={folder.id} className="py-6 px-2 rounded flex justify-between items-center hover:bg-white/5">
+          <li key={folder.slug} className="py-6 px-2 rounded flex justify-between items-center hover:bg-white/5">
             <div>
               <p>{folder.name}</p>
               <p>{DateTime.fromISO(folder.createdAt).toFormat('dd/MM/yyyy')}</p>
             </div>
             <ul className="menu menu-horizontal bg-base-200 rounded-box">
               <li>
-                <Link href={`/dashboard/folders/${folder.id}/`} className="tooltip tooltip-bottom" data-tip="See">
+                <Link href={`/dashboard/folders/${folder.slug}/`} className="tooltip tooltip-bottom" data-tip="See">
                   <svg 
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 512 512"
@@ -34,7 +34,7 @@ function Index (props : any)  {
                 </Link>
               </li>
               <li>
-                <Link href={`/dashboard/folders/${folder.id}/edit`} className="tooltip tooltip-bottom" data-tip="Edit">
+                <Link href={`/dashboard/folders/${folder.slug}/edit`} className="tooltip tooltip-bottom" data-tip="Edit">
                   <svg xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 512 512"
                   className="h-5 w-5"
@@ -49,7 +49,7 @@ function Index (props : any)  {
                 </Link>
               </li>
               <li>
-                <Link href={`/dashboard/folders/${folder.id}/`} method="delete" as="button" className="tooltip tooltip-bottom" data-tip="Delete">
+                <Link href={`/dashboard/folders/${folder.slug}/`} method="delete" as="button" className="tooltip tooltip-bottom" data-tip="Delete">
                   <svg 
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-5 w-5"
@@ -65,7 +65,7 @@ function Index (props : any)  {
                 </Link>
               </li>
             </ul>
-            {/* <Link href={`/dashboard/folders/${folder.id}`} className="btn btn-accent">See</Link> */}
+            {/* <Link href={`/dashboard/folders/${folder.slug}`} className="btn btn-accent">See</Link> */}
           </li>
         ))}
       </ul>

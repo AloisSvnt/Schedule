@@ -33,7 +33,7 @@ export default class FolderController {
    * Show individual record
    */
   async show({ params, response, inertia }: HttpContext) {
-    const folder = await Folder.find(params.id)
+    const folder = await Folder.findBy('slug', params.slug)
     return folder ? inertia.render('Folders/Show', { folder }) : response.status(404).send('Folder not found')
   }
 
@@ -41,7 +41,7 @@ export default class FolderController {
    * Show the form for editing a record
    */
   async edit({ params, response, inertia }: HttpContext) {
-    const folder = await Folder.find(params.id)
+    const folder = await Folder.findBy('slug', params.slug)
     return folder ? inertia.render('Folders/Edit', { folder }) : response.status(404).send('Folder not found')
   }
 
@@ -49,10 +49,10 @@ export default class FolderController {
    * Handle form submission for the edit action
    */
   async update({ params, request, response, session }: HttpContext) {
-    if(!params || !params.id) {
+    if(!params || !params.slug) {
       return response.status(400).send('Bad request')
     }
-    const folder = await Folder.find(params.id)
+    const folder = await Folder.findBy('slug', params.slug)
     if(!folder) {
       return response.status(404).send('Folder not found')
     }
@@ -68,7 +68,7 @@ export default class FolderController {
    * Delete record
    */
   async destroy({ params, response, session }: HttpContext) {
-    const folder = await Folder.find(params.id)
+    const folder = await Folder.findBy('slug',params.slug)
     if(!folder) {
       return response.status(404).send('Folder not found')
     }

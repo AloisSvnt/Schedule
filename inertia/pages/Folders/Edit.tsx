@@ -3,15 +3,14 @@ import { useForm } from '@inertiajs/react';
 
 function Edit(props: { folder: any }) {
 
-  console.log(props.folder);
   const { data, setData, put, processing, errors } = useForm({
-    id: props.folder.id,
+    slug: props.folder.slug,
     name: props.folder.name,
   });
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
-    put(`/dashboard/folders/${data.id}`);
+    put(`/dashboard/folders/${data.slug}`);
   }
 
   return (
