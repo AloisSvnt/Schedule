@@ -21,7 +21,7 @@ export default class ScheduleController {
    * Handle form submission for the create action
    */
   async store({ request, response, session }: HttpContext) {
-    const scheduleData = request.only(['name', 'id', 'description', 'workTime', 'userId']) as { name: string, id: number, description: string, workTime: number, userId: number }
+    const scheduleData = request.only(['folderId', 'description', 'workTime', 'userId']) as { folderId: number, description: string, workTime: number, userId: number }
     await Schedule.create(scheduleData)
     session.flash({ success: 'Schedule created successfully' })
     return response.redirect().toRoute('schedules.index')
@@ -54,7 +54,7 @@ export default class ScheduleController {
     if(!schedule) {
       return response.status(404).send('Schedule not found')
     }
-    const scheduleData = request.only(['name', 'id', 'description', 'workTime', 'userId']) as { name: string, id: number, description: string, workTime: number, userId: number }
+    const scheduleData = request.only(['folderId', 'description', 'workTime', 'userId']) as { folderId: number, description: string, workTime: number, userId: number }
     schedule.merge(scheduleData)
     await schedule.save()
     session.flash({ success: 'Schedule updated successfully' })
