@@ -16,6 +16,9 @@ export default class Schedule extends BaseModel {
   @column()
   declare workTime: number
 
+  @column()
+  declare userId: number
+
   @belongsTo(() => Folder)
   declare folder: BelongsTo<typeof Folder>
 
