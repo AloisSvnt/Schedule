@@ -20,9 +20,10 @@ export default class FolderController {
   /**
    * Handle form submission for the create action
    */
-  async store({ request, response }: HttpContext) {
+  async store({ request, response, session }: HttpContext) {
     const folderData = request.only(['name', 'totalWorkTime']) as { name: string, totalWorkTime: number }
     await Folder.create(folderData)
+    session.flash({ success: 'Folder created successfully' })
     return response.redirect().toRoute('folders.index')
   }
 
@@ -45,7 +46,7 @@ export default class FolderController {
   /**
    * Handle form submission for the edit action
    */
-  async update({ params, request, response }: HttpContext) {
+  async update({ params, request, response, session }: HttpContext) {
     if(!params || !params.id) {
       return response.status(400).send('Bad request')
     }
@@ -56,18 +57,20 @@ export default class FolderController {
     const folderData = request.only(['name', 'totalWorkTime']) as { name: string, totalWorkTime: number }
     folder.merge(folderData)
     await folder.save()
+    session.flash({ success: 'Folder updated successfully' })
     return response.redirect().toRoute('folders.index')
   }
 
   /**
    * Delete record
    */
-  async destroy({ params, response }: HttpContext) {
+  async destroy({ params, response, session }: HttpContext) {
     const folder = await Folder.find(params.id)
     if(!folder) {
       return response.status(404).send('Folder not found')
     }
     await folder.delete()
+    session.flash({ success: 'Folder deleted successfully' })
     return response.redirect().toRoute('folders.index')
   }
 }

@@ -1,5 +1,5 @@
 import { HeaderLayout } from "../HeaderLayout/HeaderLayout"
-import FlashMessages from "~/Components/FlashMessage/FlashMessage"
+import FlashMessage from "~/components/FlashMessage/FlashMessage"
 
 export const DefaultLayout = (props : any) => {
 
@@ -19,7 +19,7 @@ export const DefaultLayout = (props : any) => {
         </main>
 
       </div>
-      <FlashMessages />
+      <FlashMessage />
     </>
   )
 }
