@@ -1,5 +1,6 @@
 import { HeaderLayout } from "../HeaderLayout/HeaderLayout"
 import FlashMessage from "~/components/FlashMessage/FlashMessage"
+import BreadCrumbs from "~/components/BreadCrumbs/BreadCrumbs"
 
 export const DefaultLayout = (props : any) => {
 
@@ -9,6 +10,8 @@ export const DefaultLayout = (props : any) => {
       <div className="flex justify-center items-center flex-col min-h-screen">
 
         <HeaderLayout />
+
+        <BreadCrumbs />
 
         <main className="flex-grow w-full max-w-7xl flex flex-col justify-center">
           <div className="flex bg-gray-400 rounded-xl bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-10">
