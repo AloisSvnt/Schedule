@@ -1,11 +1,16 @@
+import { Link } from '@inertiajs/react';
+
 function Show(props: {folder: {name: string, totalWorkTime: number}}) {
 
   return (
     <div>
-      <h1>Folder Details</h1>
+      <div className="flex">
+        <h1>Folder Details</h1>
+        <Link class="btn btn-primary w-28" href={`/dashboard/folders/${props.folder.slug}/edit`}>Edit</Link>
+      </div>
       <div>
-        <p>{props.folder.name}</p>
-        <p>{props.folder.totalWorkTime}</p>
+        <p>Folder name : {props.folder.name}</p>
+        <p>Total work time : {props.folder.totalWorkTime}</p>
       </div>
     </div>
   );
