@@ -18,7 +18,7 @@ function Index (props : any)  {
             </div>
             <ul className="menu menu-horizontal bg-base-200 rounded-box">
               <li>
-                <Link href={`/dashboard/folders/${folder.slug}/`} className="tooltip tooltip-bottom" data-tip="See">
+                <Link href={`/dashboard/folders/${folder.slug}/`} className="tooltip tooltip-bottom" data-tip="Open">
                   <svg 
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 512 512"
