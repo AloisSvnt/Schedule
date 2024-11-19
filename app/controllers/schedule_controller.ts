@@ -7,14 +7,14 @@ export default class ScheduleController {
    */
   async index({inertia}: HttpContext) {
     const schedules = await Schedule.all()
-    return inertia.render('Schedules/Index', { schedules })
+    return inertia.render('Schedule/Index', { schedules })
   }
 
   /**
    * Display form to create a new record
    */
   async create({inertia}: HttpContext) {
-    return inertia.render('Schedules/Create')
+    return inertia.render('Schedule/Create')
   }
 
   /**
@@ -24,7 +24,7 @@ export default class ScheduleController {
     const scheduleData = request.only(['folderId', 'description', 'workTime', 'userId']) as { folderId: number, description: string, workTime: number, userId: number }
     await Schedule.create(scheduleData)
     session.flash({ success: 'Schedule created successfully' })
-    return response.redirect().toRoute('schedules.index')
+    return response.redirect().toRoute('schedule.index')
   }
 
   /**
@@ -32,7 +32,7 @@ export default class ScheduleController {
    */
   async show({ params, response, inertia }: HttpContext) {
     const schedule = await Schedule.find(params.id)
-    return schedule ? inertia.render('Schedules/Show', { schedule }) : response.status(404).send('Schedule not found')
+    return schedule ? inertia.render('Schedule/Show', { schedule }) : response.status(404).send('Schedule not found')
   }
 
   /**
@@ -40,7 +40,7 @@ export default class ScheduleController {
    */
   async edit({ params, response, inertia }: HttpContext) {
     const schedule = await Schedule.find(params.id)
-    return schedule ? inertia.render('Schedules/Edit', { schedule }) : response.status(404).send('Schedule not found')
+    return schedule ? inertia.render('Schedule/Edit', { schedule }) : response.status(404).send('Schedule not found')
   }
 
   /**
@@ -58,7 +58,7 @@ export default class ScheduleController {
     schedule.merge(scheduleData)
     await schedule.save()
     session.flash({ success: 'Schedule updated successfully' })
-    return response.redirect().toRoute('schedules.index')
+    return response.redirect().toRoute('schedule.index')
   }
 
   /**
@@ -71,6 +71,6 @@ export default class ScheduleController {
     }
     await schedule.delete()
     session.flash({ success: 'Schedule deleted successfully' })
-    return response.redirect().toRoute('schedules.index')
+    return response.redirect().toRoute('schedule.index')
   }
 }
