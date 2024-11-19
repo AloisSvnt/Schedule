@@ -36,7 +36,6 @@ export default class SessionController {
 
   async registerUser({ request, response, session }: HttpContext) {
     const { username, password } = request.only(['username', 'password'])
-    console.log(username, password)
     try {
       await User.create({ username, password })
       session.flash({ success: 'Your account has been successfully created.' })
