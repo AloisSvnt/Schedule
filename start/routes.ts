@@ -9,6 +9,7 @@
 
 const DashboardController = () => import('#controllers/dashboard_controller')
 const FolderController = () => import('#controllers/folder_controller')
+const ScheduleController = () => import('#controllers/schedule_controller')
 const SessionController = () => import('#controllers/auth/session_controller')
 import router from '@adonisjs/core/services/router'
 import { middleware } from './kernel.js'
@@ -45,6 +46,18 @@ router
         router.delete('/:slug',[FolderController, 'destroy']).as('folders.destroy')
       })
       .prefix('/folders')
+
+    router
+      .group(()=>{
+        router.get('',[ScheduleController, 'index']).as('schedule.index')
+        router.get('/create',[ScheduleController, 'create']).as('schedule.create')
+        router.post('',[ScheduleController, 'store']).as('schedule.store')
+        router.get('/:slug',[ScheduleController, 'show']).as('schedule.show')
+        router.get('/:slug/edit',[ScheduleController, 'edit']).as('schedule.edit')
+        router.put('/:slug',[ScheduleController, 'update']).as('schedule.update')
+        router.delete('/:slug',[ScheduleController, 'destroy']).as('schedule.destroy')
+      })
+      .prefix('/schedule')
 
   })
   .prefix('/dashboard')
