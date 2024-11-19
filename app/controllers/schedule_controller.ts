@@ -1,5 +1,6 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import Schedule from '#models/schedule'
+import { DateTime } from 'luxon'
 
 export default class ScheduleController {
   /**
@@ -20,9 +21,10 @@ export default class ScheduleController {
   /**
    * Handle form submission for the create action
    */
-  async store({ request, response, session }: HttpContext) {
-    const scheduleData = request.only(['folderId', 'description', 'workTime', 'date']) as { folderId: number, description: string, workTime: number, date: string }
+  async store({ request, response, session, auth }: HttpContext) {
+    const scheduleData = request.only(['folderId', 'description', 'workTime', 'date']) as { folderId: number, description: string, workTime: number, date: DateTime<boolean>, userId?: number }
     scheduleData.userId = auth.user!.id
+    scheduleData.date = DateTime.fromISO(scheduleData.date as unknown as string)
     await Schedule.create(scheduleData)
     session.flash({ success: 'Schedule created successfully' })
     return response.redirect().toRoute('schedule.index')
@@ -47,7 +49,7 @@ export default class ScheduleController {
   /**
    * Handle form submission for the edit action
    */
-  async update({ params, request, response, session }: HttpContext) {
+  async update({ params, request, response, session, auth }: HttpContext) {
     if(!params || !params.id) {
       return response.status(400).send('Bad request')
     }
@@ -55,8 +57,9 @@ export default class ScheduleController {
     if(!schedule) {
       return response.status(404).send('Schedule not found')
     }
-    const scheduleData = request.only(['folderId', 'description', 'workTime', 'date']) as { folderId: number, description: string, workTime: number, date: string }
+    const scheduleData = request.only(['folderId', 'description', 'workTime', 'date']) as { folderId: number, description: string, workTime: number, date: DateTime<boolean>, userId?: number }
     scheduleData.userId = auth.user!.id
+    scheduleData.date = DateTime.fromISO(scheduleData.date as unknown as string)
     schedule.merge(scheduleData)
     await schedule.save()
     session.flash({ success: 'Schedule updated successfully' })
