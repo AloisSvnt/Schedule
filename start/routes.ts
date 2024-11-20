@@ -36,29 +36,28 @@ router
     router.get('', [DashboardController, 'index']).as('dashboard')
 
     router
-      .group(()=>{
-        router.get('',[FolderController, 'index']).as('folders.index')
-        router.get('/create',[FolderController, 'create']).as('folders.create')
-        router.post('',[FolderController, 'store']).as('folders.store')
-        router.get('/:slug',[FolderController, 'show']).as('folders.show')
-        router.get('/:slug/edit',[FolderController, 'edit']).as('folders.edit')
-        router.put('/:slug',[FolderController, 'update']).as('folders.update')
-        router.delete('/:slug',[FolderController, 'destroy']).as('folders.destroy')
+      .group(() => {
+        router.get('', [FolderController, 'index']).as('folders.index')
+        router.get('/create', [FolderController, 'create']).as('folders.create')
+        router.post('', [FolderController, 'store']).as('folders.store')
+        router.get('/:slug', [FolderController, 'show']).as('folders.show')
+        router.get('/:slug/edit', [FolderController, 'edit']).as('folders.edit')
+        router.put('/:slug', [FolderController, 'update']).as('folders.update')
+        router.delete('/:slug', [FolderController, 'destroy']).as('folders.destroy')
       })
       .prefix('/folders')
 
     router
-      .group(()=>{
-        router.get('',[ScheduleController, 'index']).as('schedule.index')
-        router.get('/create',[ScheduleController, 'create']).as('schedule.create')
-        router.post('',[ScheduleController, 'store']).as('schedule.store')
-        router.get('/:slug',[ScheduleController, 'show']).as('schedule.show')
-        router.get('/:slug/edit',[ScheduleController, 'edit']).as('schedule.edit')
-        router.put('/:slug',[ScheduleController, 'update']).as('schedule.update')
-        router.delete('/:slug',[ScheduleController, 'destroy']).as('schedule.destroy')
+      .group(() => {
+        router.get('', [ScheduleController, 'index']).as('schedule.index')
+        router.get('/create', [ScheduleController, 'create']).as('schedule.create')
+        router.post('', [ScheduleController, 'store']).as('schedule.store')
+        router.get('/:slug', [ScheduleController, 'show']).as('schedule.show')
+        router.get('/:slug/edit', [ScheduleController, 'edit']).as('schedule.edit')
+        router.put('/:slug', [ScheduleController, 'update']).as('schedule.update')
+        router.delete('/:slug', [ScheduleController, 'destroy']).as('schedule.destroy')
       })
       .prefix('/schedule')
-
   })
   .prefix('/dashboard')
   .use(middleware.auth())
