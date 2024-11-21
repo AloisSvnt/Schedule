@@ -26,6 +26,7 @@ export const HeaderLayout = (props : any) => {
             <li><Link href="/">Homepage</Link></li>
             <li><Link href="/dashboard/folders">Folders</Link></li>
             <li><Link href="/dashboard/schedule">Schedule</Link></li>
+            <li><Link href="/register">Register</Link></li>
           </ul>
         </div>
       </div>
