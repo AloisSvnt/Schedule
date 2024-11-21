@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, usePage } from '@inertiajs/react';
 import { DateTime } from 'luxon';
 import CreateSchedule from '~/components/ScheduleForm/CreateSchedule';
@@ -11,9 +11,27 @@ function Schedule({ schedules, folders }) {
   const [openFormDay, setOpenFormDay] = useState<string | null>(null);
   const [openEditFormDay, setOpenEditFormDay] = useState<string | null>(null);
   const [workTimeTotal, setWorkTimeTotal] = useState(0);
+  const [dailyWorkTimeTotals, setDailyWorkTimeTotals] = useState<{ [key: string]: number }>({});
   const [selectedSchedule, setSelectedSchedule] = useState({ folderId: null, description: '', workTime: null, day: '' });
 
   const { user } = usePage().props;
+
+  useEffect(() => {
+    const dailyTotals: { [key: string]: number } = {};
+    let weeklyTotal = 0;
+
+    schedules.forEach(schedule => {
+      const day = DateTime.fromISO(schedule.day).toISODate();
+      if (!dailyTotals[day]) {
+        dailyTotals[day] = 0;
+      }
+      dailyTotals[day] += schedule.workTime || 0;
+      weeklyTotal += schedule.workTime || 0;
+    });
+
+    setDailyWorkTimeTotals(dailyTotals);
+    setWorkTimeTotal(weeklyTotal);
+  }, [schedules]);
 
   const nextWeek = () => {
     setCurrentWeek(currentWeek.plus({ weeks: 1 }));
@@ -60,13 +78,13 @@ function Schedule({ schedules, folders }) {
         <button className="btn" onClick={() => setCurrentWeek(actualWeek)}>Today</button>
         <button className="btn" onClick={nextWeek}>Next Week</button>
       </div>
-      <div className="flex flex-col">
+      <div className="flex flex-col gap-6">
         {daysOfWeek
           .filter((day) => showWeekEnd || (!showWeekEnd && day.weekday < 6))
           .map((day) => (
-            <div key={day.toISODate()} className="collapse collapse-plus">
+            <div key={day.toISODate()} className="collapse collapse-plus border px-2">
               <input type="checkbox" defaultChecked={day.hasSame(DateTime.now(), 'day')} />
-              <h2 className="collapse-title px-0">{day.toFormat('cccc, dd LLL yyyy')}</h2>
+              <h2 className="collapse-title px-0">{day.toFormat('cccc, dd LLL yyyy')} - {dailyWorkTimeTotals[day.toISODate()] || 0}h</h2>
               <ul className="collapse-content flex flex-col px-0 gap-4">
               <button className="btn btn-secondary max-w-fit" onClick={() => toggleCreateShowForm(day.toISODate())}>add</button>
                 {schedules
@@ -75,15 +93,15 @@ function Schedule({ schedules, folders }) {
                   .map((schedule) => (
                     <li key={schedule.id} className="flex flex-wrap justify-between items-center min-h-16 border-t odd:bg-black/20 px-4">
                       <div className="flex justify-between flex-1">
-                        <span className="flex flex-col w-1/3 items-start">
+                        <span className="flex flex-col w-1/4 items-start">
                           <p>Folder</p>
                           <p>{getFolderName(schedule.folderId)}</p>
                         </span>
-                        <span className="flex flex-col w-1/3">
+                        <span className="flex flex-col w-1/2">
                           <p>Description</p>
                           <p>{schedule.description}</p>
                         </span>
-                        <span className="flex flex-col w-1/3 items-end pr-4">
+                        <span className="flex flex-col w-1/4 items-end pr-4">
                           <p>Work time</p>
                           <p>{schedule.workTime}h</p>
                         </span>
@@ -113,6 +131,7 @@ function Schedule({ schedules, folders }) {
           <input type="checkbox" className="toggle" onChange={toggleWeekEnd} />
         </label>
       </div>
+      <h2>Total Work Time for the Week: {workTimeTotal}h</h2>
     </>
   );
 }
