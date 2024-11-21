@@ -31,6 +31,12 @@ mkdir tmp
 node ace migration:run
 ```
 
+## Seeds
+
+```bash
+node ace migration:refresh --seed
+```
+
 ## Server
 
 ```bash
