@@ -15,7 +15,7 @@ export default class Schedule extends BaseModel {
   declare description: string
 
   @column()
-  declare date: DateTime
+  declare day: DateTime
 
   @column()
   declare workTime: number
