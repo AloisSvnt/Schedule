@@ -39,6 +39,10 @@ function Schedule({ schedules, folders }) {
     openFormDay ? setOpenFormDay(null) : null;
   }
 
+  const handleEditComplete = () => {
+    setOpenEditFormDay(null);
+  }
+
   const setPropsForEditForm = (day: string, props: any) => {
     toggleEditShowForm(day);
     setSelectedSchedule(props);
@@ -90,7 +94,14 @@ function Schedule({ schedules, folders }) {
                       </div>
                     </li>
                   ))}
-                {openEditFormDay === day.toISODate() && <EditSchedule folders={folders} date={day} schedule={selectedSchedule}/>}
+                {openEditFormDay === day.toISODate() && (
+                  <EditSchedule
+                    folders={folders} 
+                    date={day}
+                    schedule={selectedSchedule}
+                    onEditComplete={handleEditComplete}
+                  />
+                )}
                 {openFormDay === day.toISODate() && <CreateSchedule folders={folders} date={day} />}
               </ul>
             </div>
