@@ -70,6 +70,10 @@ function Schedule({ schedules, folders }) {
     return folders.find((folder) => folder.id === folderId)?.name;
   }
 
+  const getFolderSlug = (folderId: number) => {
+    return folders.find((folder) => folder.id === folderId)?.slug;
+  }
+
   return (
     <>
       <h1>Schedule</h1>
@@ -95,7 +99,7 @@ function Schedule({ schedules, folders }) {
                       <div className="flex justify-between flex-1">
                         <span className="flex flex-col w-1/4 items-start">
                           <p>Folder</p>
-                          <p>{getFolderName(schedule.folderId)}</p>
+                          <Link className="hover:underline" href={`/dashboard/folders/${getFolderSlug(schedule.folderId)}`}>{getFolderName(schedule.folderId)}</Link>
                         </span>
                         <span className="flex flex-col w-1/2">
                           <p>Description</p>
