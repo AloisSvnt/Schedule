@@ -1,5 +1,6 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import Folder from '#models/folder' 
+import Schedule from '#models/schedule'
 import string from '@adonisjs/core/helpers/string'
 
 export default class FolderController {
@@ -42,7 +43,8 @@ export default class FolderController {
    */
   async show({ params, response, inertia }: HttpContext) {
     const folder = await Folder.findBy('slug', params.slug)
-    return folder ? inertia.render('Folders/Show', { folder }) : response.status(404).send('Folder not found')
+    const schedules = await Schedule.query().where('folder_id', folder.id).preload('user')
+    return folder ? inertia.render('Folders/Show', { folder, schedules }) : response.status(404).send('Folder not found')
   }
 
   /**

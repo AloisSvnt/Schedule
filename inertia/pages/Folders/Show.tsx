@@ -1,6 +1,10 @@
 import { Link } from '@inertiajs/react';
 
-function Show(props: {folder: {name: string, totalWorkTime: number, slug: string}}) {
+function Show(props: {folder: {name: string, slug: string}, schedules: {name: string, workTime: number, user: {username: string}}[]}) {
+
+  const getTotalWorkTime = () => {
+    return props.schedules.reduce((total, schedule) => total + schedule.workTime, 0)
+  }
 
   return (
     <>
@@ -13,29 +17,28 @@ function Show(props: {folder: {name: string, totalWorkTime: number, slug: string
       </div>
       <div className='flex flex-col gap-6'>
         <p>Folder name : {props.folder.name}</p>
-        <div className='flex flex-col gap-6'>
+        <div className='flex flex-col gap-3'>
           <h2 className='text-xl'>Schedules</h2>
-          <ul className='join join-vertical'>
-              <li className='card py-2 join-item'>
-                <Link href="" >schedule.name</Link>
-                <p>Work time : schedule.workTime</p>
-                <p>By : user.name</p>
+          <div className='flex justify-between px-2'>
+            <p className='w-1/4'>User</p>
+            <p className='w-1/2'>Description</p>
+            <p className='w-1/4 text-end'>Work time</p>
+          </div>
+          <ul className=''>
+            {props.schedules.map((schedule, index) => (
+              <li key={index} className='py-2 odd:bg-black/20 px-2'>
+                <span className="flex justify-between">
+                  <p className="min-w-10 w-1/4">{schedule.user.username}</p>
+                  <p className="min-w-10 w-1/2">{schedule.description}</p>
+                  <p className="min-w-10 w-1/4 text-end">{schedule.workTime}h</p>
+                </span>
               </li>
-              <li className='card py-2 join-item hover:bg-accent flex flex-row'>
-                <Link href="" >schedule.name (task)</Link>
-                <p>Work time : schedule.workTime (xx:xx)</p>
-                <p>By : user.name (username)</p>
-              </li>
-              <li className='card py-2 join-item'>
-                <Link href="" >schedule.name</Link>
-                <p>Work time : schedule.workTime</p>
-                <p>By : user.name</p>
-              </li>
+            ))}
 
           </ul>
 
         </div>
-        <p>Total work time : {props.folder.totalWorkTime}</p>
+        <p>Total work time : {getTotalWorkTime()}h</p>
       </div>
     </>
   );
