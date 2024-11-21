@@ -20,7 +20,9 @@ function Schedule({ schedules, folders }) {
     const dailyTotals: { [key: string]: number } = {};
     let weeklyTotal = 0;
 
-    schedules.forEach(schedule => {
+    const userSchedules = schedules.filter(schedule => schedule.userId === user.id);
+
+    userSchedules.forEach(schedule => {
       const day = DateTime.fromISO(schedule.day).toISODate();
       if (!dailyTotals[day]) {
         dailyTotals[day] = 0;
@@ -31,7 +33,7 @@ function Schedule({ schedules, folders }) {
 
     setDailyWorkTimeTotals(dailyTotals);
     setWorkTimeTotal(weeklyTotal);
-  }, [schedules]);
+  }, [schedules, user.id]);
 
   const nextWeek = () => {
     setCurrentWeek(currentWeek.plus({ weeks: 1 }));
