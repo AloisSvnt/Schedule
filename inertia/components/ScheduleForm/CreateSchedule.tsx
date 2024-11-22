@@ -1,17 +1,16 @@
 import {useForm} from '@inertiajs/react';
 
-function CreateSchedule(props:{folders:{id:number, name:string}, date:string}) {
+function CreateSchedule(props:{folders:{id:number, name:string}[], date:string}) {
 
   const { data, setData, post, processing, errors } = useForm({
     folderId:'',
     description:'',
     workTime:'',
-    day:props.date.toISODate()
+    day: new Date(props.date).toISOString().split('T')[0]
   });
   
   const submit = (e: any) => {
     e.preventDefault();
-    console.log(data)
     post("/dashboard/schedule");
   };
 
@@ -20,7 +19,7 @@ function CreateSchedule(props:{folders:{id:number, name:string}, date:string}) {
       <form onSubmit={submit} className="flex justify-between join">
         <select className="select w-full max-w-xs join-item" onChange={e => setData('folderId', e.target.value)}>
           <option value="">Select a folder</option>
-          {props.folders.map(folder => {
+          {props.folders.map((folder: {id: number, name: string}) => {
             return <option key={folder.id} value={folder.id}>{folder.name}</option>
           })}
         </select>

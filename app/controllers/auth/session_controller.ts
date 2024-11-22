@@ -14,8 +14,8 @@ export default class SessionController {
       await auth.use('web').login(user);
       session.flash({ success: 'You are logged in.' });
       await response.redirect('/dashboard');
-    } catch (error) {
-      session.flash({ error: 'Incorrect credentials.' });
+    } catch (errors) {
+      session.flash({ errors: 'Incorrect credentials.' });
       response.redirect('/login');
     }
   }
@@ -40,8 +40,8 @@ export default class SessionController {
       await User.create({ username, password })
       session.flash({ success: 'Your account has been successfully created.' })
       response.redirect('/login')
-    } catch (error) {
-      session.flash({ error: 'An error occurred while creating your account.' })
+    } catch (errors) {
+      session.flash({ errors: 'An error occurred while creating your account.' })
       response.redirect('/register')
     }
   }

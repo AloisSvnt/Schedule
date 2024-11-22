@@ -32,7 +32,7 @@ function Login() {
               </svg>
               <input type="text" className="grow" placeholder="Username" value={data.username} onChange={e => setData('username', e.target.value)}  />
             </label>
-            {errors.username && <div>{errors.username}</div>}
+            {errors.username && <div className="text-red-500">{errors.username}</div>}
             <label className="input input-bordered flex items-center gap-2  bg-transparent">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -46,7 +46,7 @@ function Login() {
               </svg>
               <input type="password" className="grow" value={data.password} onChange={e => setData('password', e.target.value)} />
             </label>
-            {errors.password && <div>{errors.password}</div>}
+            {errors.password && <div className="text-red-500">{errors.password}</div>}
             <button className='btn btn-primary w-full' type="submit" disabled={processing}>Login</button>
           </form>
 

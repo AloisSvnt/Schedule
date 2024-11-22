@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react';
 import { usePage } from '@inertiajs/react';
 
 function FlashMessage() {
-  const { success, error } = usePage().props;
+  const { success, errors } = usePage<{ success?: React.ReactNode; errors?: React.ReactNode }>().props;
   const [visible, setVisible] = useState(false);
   const [exiting, setExiting] = useState(false);
 
   useEffect(() => {
-    if (success || error) {
+    if (success || errors) {
       setVisible(true);
       const timer = setTimeout(() => {
         setExiting(true);
@@ -18,7 +18,7 @@ function FlashMessage() {
       }, 3000);
       return () => clearTimeout(timer);
     }
-  }, [success, error]);
+  }, [success, errors]);
 
   return (
     <>
@@ -43,7 +43,7 @@ function FlashMessage() {
           <span>{success}</span>
         </div>
       )}
-      {visible && error && (
+      {visible && errors && (
         <div
           role="alert"
           className={`alert alert-error max-w-96 absolute bottom-2 right-2 transition-opacity duration-500 ${
@@ -63,7 +63,7 @@ function FlashMessage() {
               d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
             />
           </svg>
-          <span>{error}</span>
+          <span>{errors}</span>
         </div>
       )}
     </>

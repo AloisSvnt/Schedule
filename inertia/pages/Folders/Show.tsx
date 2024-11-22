@@ -1,6 +1,6 @@
 import { Link } from '@inertiajs/react';
 
-function Show(props: {folder: {name: string, slug: string}, schedules: {name: string, workTime: number, user: {username: string}}[]}) {
+function Show(props: {folder: {name: string, slug: string}, schedules: {description: string, workTime: number, user: {username: string}}[]}) {
 
   const getTotalWorkTime = () => {
     return props.schedules.reduce((total, schedule) => total + schedule.workTime, 0)

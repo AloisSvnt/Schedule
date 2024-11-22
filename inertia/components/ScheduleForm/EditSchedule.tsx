@@ -1,7 +1,26 @@
 import React from 'react';
 import { useForm } from '@inertiajs/react';
 
-function EditSchedule({ folders, date, schedule, onEditComplete }) {
+interface Folder {
+  id: string;
+  name: string;
+}
+
+interface Schedule {
+  id: string;
+  folderId: string;
+  description: string;
+  workTime: number;
+}
+
+interface EditScheduleProps {
+  folders: Folder[];
+  date: { toISODate: () => string };
+  schedule: Schedule;
+  onEditComplete: () => void;
+}
+
+function EditSchedule({ folders, date, schedule, onEditComplete }: EditScheduleProps) {
   const { data, setData, put, processing, errors } = useForm({
     folderId: schedule.folderId,
     description: schedule.description,
