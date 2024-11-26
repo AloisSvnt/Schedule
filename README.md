@@ -1,6 +1,6 @@
-# Instructions pour le Projet AdonisJS - Schedule
+# Instructions for the Project AdonisJS - Schedule
 
-## Installation
+## Install
 
 ```bash
 git clone git@github.com:AloisSvnt/Schedule.git
@@ -34,7 +34,7 @@ node ace migration:run
 ## Seeds
 
 ```bash
-node ace migration:refresh --seed
+node ace db:seed
 ```
 
 ## Server
